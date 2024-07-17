@@ -12,12 +12,12 @@ class StudentFactory extends factory
                 'fname' =>fake()->firstname(),
                 'lname' =>fake()->lastname(),
                 'email' =>fake()->unique(),safeEmail()
-                'phone' =>fake()->phoneNumber(),
+                'phone' =>fake()->PhoneNumber(),
                 'address' =>fake()->firstname(),s
                 'city' =>fake()->firstname(),
                 'province' =>fake()->firstname(),
                 'zip' =>fake()->zip(),
-                'birthdate' =>fake()->dateTimeBetween('2000-01-01', '2010-12-30')->format->('Y-m-d')
+                'birthdate' =>fake()->dateTimeBetween('2000-01-01', '2010-12-30')->format('Y-m-d'),
 
 
 
