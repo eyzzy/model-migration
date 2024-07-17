@@ -11,9 +11,9 @@ class StudentFactory extends factory
             return [
                 'fname' =>fake()->firstname(),
                 'lname' =>fake()->lastname(),
-                'email' =>fake()->unique(),safeEmail()
+                'email' =>fake()->unique(),safeEmail(),
                 'phone' =>fake()->PhoneNumber(),
-                'address' =>fake()->firstname(),s
+                'address' =>fake()->firstname(),
                 'city' =>fake()->firstname(),
                 'province' =>fake()->firstname(),
                 'zip' =>fake()->zip(),
