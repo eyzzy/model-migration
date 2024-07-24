@@ -10,7 +10,7 @@
      {
         use HasFactory;
 
-        protected $table ="students";
+        protected $table ='student';
         protected $fillable = [
             'fname',
             'lname',

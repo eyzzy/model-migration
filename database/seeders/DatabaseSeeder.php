@@ -17,7 +17,10 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        SubjectGrade::factory()->count(50)->create();
+        StudentController::factory()
+            ->count(50)
+            ->hasPosts(1)
+            ->create();
           
 
     }

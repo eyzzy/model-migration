@@ -11,7 +11,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        $middleware->validateCsrTokens(except:[
+        'http://modelsolomon.test/student'
+        ]);
+
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
