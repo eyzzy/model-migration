@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use\App\Model\Student;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
@@ -11,7 +11,10 @@ class StudentController extends Controller
      */
     public function index()
     {
-       return Student::all();
+
+        $data['Student'] = Student::all();
+        return view('Student.index', $data);
+       //return Student::all();
     }
 
     /**
@@ -19,7 +22,7 @@ class StudentController extends Controller
      */
     public function create()
     {
-        //
+        return view ('Students.create');
     }
 
     /**
@@ -27,17 +30,19 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        $student = new Student();
-        $student->fname = $request['fname'];
-        $student->lname = $request['lname'];
-        $student->email = $request['email'];
-        $student->phone = $request['phone'];
-        $student->address = $request['address'];
-        $student->city = $request['city'];
-        $student->province = $request['province'];
-        $student->zip = $request['zip'];
-        $student->birthdate= $request['birthdate'];
-        $student->save();
+        $Student = new Student();
+        $Student->fname = $request['fname'];
+        $Student->lname = $request['lname'];
+        $Student->email = $request['email'];
+        $Student->phone = $request['phone'];
+        $Student->address = $request['address'];
+        $Student->city = $request['city'];
+        $Student->province = $request['province'];
+        $Student->zip = $request['zip'];
+        $Student->birthdate= $request['birthdate'];
+        $Student->save();
+
+        return redirect()->to('students');
     }
 
     /**
@@ -63,17 +68,17 @@ class StudentController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $student = Student::find($id);
-        $student->fname =   $request['fname'];
-        $student->lname =   $request['lname'];
-        $student->email =    $request['email'];
-        $student->phone =    $request['phone'];
-        $student->address =  $request['address'];
-        $student->city =     $request['city'];
-        $student->province = $request['province'];
-        $student->zip =      $request['zip'];
-        $student->birthdate= $request['birthdate'];
-        $student->save();
+        $Student = Student::find($id);
+        $Student->fname =   $request['fname'];
+        $Student->lname =   $request['lname'];
+        $Student->email =    $request['email'];
+        $Student->phone =    $request['phone'];
+        $Student->address =  $request['address'];
+        $Student->city =     $request['city'];
+        $Student->province = $request['province'];
+        $Student->zip =      $request['zip'];
+        $Student->birthdate= $request['birthdate'];
+        $Student->save();
     }
 
     /**
@@ -81,6 +86,7 @@ class StudentController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $Student = Student::find($id);
+        $Student->delete();
     }
 }

@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Student;
 use App\Models\User;
-use App\Models\SubjectGrade;
+use App\Models\StudentController;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -17,9 +17,8 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        StudentController::factory()
-            ->count(50)
-            ->hasPosts(1)
+        Student::factory()
+            ->count(30)
             ->create();
           
 

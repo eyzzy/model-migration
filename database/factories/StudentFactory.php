@@ -3,8 +3,11 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+//use Illuminate\Database\Eloquent\Factories\Model;
 class StudentFactory extends factory
-    {
+
+    
+{
 
     public function definition(): array
         {
