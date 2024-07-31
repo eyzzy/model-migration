@@ -1,20 +1,61 @@
 <?php
 
 namespace App\Http\Controllers;
-use\App\Model\Student;
+
+use App\Models\Student;
+use App\Models\SubjectGrade;
 use Illuminate\Http\Request;
 
-class StudentController extends Controller
+class StudentContoller extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        //Select all Student Data
+       // return Student::all();
+       $data['students'] = Student::all();
+       return view('students.index', $data);
 
-        $data['Student'] = Student::all();
-        return view('Student.index', $data);
-       //return Student::all();
+            //AND
+        //return Student::where('province','South Carolina')->get();
+
+            //OR
+        //return Student::where('province','Georgia')
+                  //->orWhere('province', 'Maryland')
+                 // ->orWhere('lname', 'Miller' )
+                  //->get();
+
+            //Select the Data Where in All start with P
+       // return Student::Where('fname', 'like', '%p%')->get();
+
+            //Order Ascending
+         // return Student::orderBy('fname')->get();
+
+            //Order Desascending
+            //return Student::orderBy('fname', "desc")->get();
+
+            // Limit Student Data
+            //return Student::limit(7)->get();
+
+            // Display Odd ID
+           // return Student::whereIn('id', [1,3,5,7,9,11])->get();
+
+            //Display Odd Even
+            //return Student::whereNotIn('id', [1,3,5,7,9,11])->get();
+
+            //Display the First Student data Province
+           // return Student::where('province', 'Georgia')->first();
+
+           
+           // For Relationsip
+          //  return Student::with('grades')->get();
+          //
+          return Student::with(['grades' => function($query){
+                return $query->where('grade', '>=', 90);
+          }])->get();
+
     }
 
     /**
@@ -22,7 +63,7 @@ class StudentController extends Controller
      */
     public function create()
     {
-        return view ('Students.create');
+        return view('students.create');
     }
 
     /**
@@ -30,19 +71,30 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        $Student = new Student();
-        $Student->fname = $request['fname'];
-        $Student->lname = $request['lname'];
-        $Student->email = $request['email'];
-        $Student->phone = $request['phone'];
-        $Student->address = $request['address'];
-        $Student->city = $request['city'];
-        $Student->province = $request['province'];
-        $Student->zip = $request['zip'];
-        $Student->birthdate= $request['birthdate'];
-        $Student->save();
-
-        return redirect()->to('students');
+        $request->validate([
+            'fname'     => 'required',
+            'lname'       => 'required',
+            'email'   => 'required',
+            'phone'      => 'required',
+            'address' => 'required',
+            'city' => 'required',
+            'province' => 'required',
+            'zip' => 'required',
+            'birthdate' => 'required|date',
+        ]);
+       $student = new Student();
+       $student-> fname         = $request['fname'];
+       $student-> lname         = $request['lname'];
+       $student-> email         = $request['email'];
+       $student-> phone         = $request['phone'];
+       $student-> address       = $request['address'];
+       $student-> city          = $request['city'];
+       $student-> province      = $request['province'];
+       $student-> zip           = $request['zip'];
+       $student-> birthdate     = $request['birthdate'];
+       $student-> save();
+       return back()->with('success', 'Data saved successfully!.');
+       return redirect()->to('students');
     }
 
     /**
@@ -50,7 +102,13 @@ class StudentController extends Controller
      */
     public function show(string $id)
     {
-        //
+        //Display The Student ID
+        //return Student::find($id);
+
+        //Display the Fname and Lname
+        //$student =  Student::find($id);
+        //return $student->fname . ' ' .  $student ->lname;
+        //return $student->fullname;
     }
 
     /**
@@ -58,9 +116,8 @@ class StudentController extends Controller
      */
     public function edit(string $id)
     {
-        return Student::with(['grades' => function($query){
-            return $query->where ('grade', '>=', 90);
-        }])->get();
+        $data['students'] = Student::find($id);
+        return view('students.edit', $data);
     }
 
     /**
@@ -68,17 +125,19 @@ class StudentController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $Student = Student::find($id);
-        $Student->fname =   $request['fname'];
-        $Student->lname =   $request['lname'];
-        $Student->email =    $request['email'];
-        $Student->phone =    $request['phone'];
-        $Student->address =  $request['address'];
-        $Student->city =     $request['city'];
-        $Student->province = $request['province'];
-        $Student->zip =      $request['zip'];
-        $Student->birthdate= $request['birthdate'];
-        $Student->save();
+        $student = Student::find($id);
+       $student-> fname         = $request['fname'];
+       $student-> lname         = $request['lname'];
+       $student-> email         = $request['email'];
+       $student-> phone         = $request['phone'];
+       $student-> address       = $request['address'];
+       $student-> city          = $request['city'];
+       $student-> province      = $request['province'];
+       $student-> zip           = $request['zip'];
+       $student-> birthdate     = $request['birthdate'];
+       $student-> save();
+       
+        return redirect()->back();
     }
 
     /**
@@ -86,7 +145,9 @@ class StudentController extends Controller
      */
     public function destroy(string $id)
     {
-        $Student = Student::find($id);
-        $Student->delete();
+        $student = Student::find($id);
+        $student->delete();
+        return redirect()->to('students');
     }
+    
 }

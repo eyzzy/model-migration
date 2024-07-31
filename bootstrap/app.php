@@ -11,10 +11,11 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->validateCsrTokens(except:[
-        'http://modelsolomon.test/student'
+        //
+        $middleware->validateCsrfTokens(except:[
+            'http://modelquirol.test/students',
+            'http://modelquirol.test/students/31',
         ]);
-
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
